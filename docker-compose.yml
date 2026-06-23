@@ -1,0 +1,59 @@
+version: '3.8'
+
+services:
+  # UniSQL Backend API
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: unisql-backend
+    ports:
+      - "3001:3001"
+    volumes:
+      - ./backend/data:/app/data
+    environment:
+      - NODE_ENV=production
+      - PORT=3001
+    restart: unless-stopped
+    networks:
+      - unisql-network
+
+  # UniSQL Frontend (Next.js)
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: unisql-frontend
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - NEXT_PUBLIC_API_URL=http://backend:3001
+    depends_on:
+      - backend
+    restart: unless-stopped
+    networks:
+      - unisql-network
+
+  # Optional: SQL Server for testing (uncomment to use)
+  # sqlserver:
+  #   image: mcr.microsoft.com/mssql/server:2022-latest
+  #   container_name: unisql-sqlserver
+  #   ports:
+  #     - "1433:1433"
+  #   environment:
+  #     - ACCEPT_EULA=Y
+  #     - MSSQL_SA_PASSWORD=YourStrong!Passw0rd
+  #     - MSSQL_PID=Developer
+  #   volumes:
+  #     - sqlserver-data:/var/opt/mssql
+  #   restart: unless-stopped
+  #   networks:
+  #     - unisql-network
+
+networks:
+  unisql-network:
+    driver: bridge
+
+# volumes:
+#   sqlserver-data:

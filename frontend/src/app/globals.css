@@ -1,0 +1,388 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+@import "tailwindcss";
+@config "../../tailwind.config.ts";
+
+@theme {
+  --color-bg: var(--bg);
+  --color-bg-secondary: var(--bg-secondary);
+  --color-surface: var(--surface);
+  --color-surface-hover: var(--surface-hover);
+  --color-surface-active: var(--surface-active);
+  --color-border: var(--border);
+  --color-border-subtle: var(--border-subtle);
+  --color-text: var(--text);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-muted: var(--text-muted);
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-error: var(--error);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-info: var(--info);
+  --font-mono: 'JetBrains Mono', Consolas, monospace;
+}
+
+/* ===== CSS Custom Properties for Theming ===== */
+:root {
+  --bg: #09090b;
+  --bg-secondary: #0f0f12;
+  --surface: #18181b;
+  --surface-hover: #1f1f23;
+  --surface-active: #27272a;
+  --border: #27272a;
+  --border-subtle: #1e1e21;
+  --text: #fafafa;
+  --text-secondary: #a1a1aa;
+  --text-muted: #71717a;
+  --accent: #6366f1;
+  --accent-hover: #818cf8;
+  --accent-muted: rgba(99, 102, 241, 0.15);
+  --accent-glow: rgba(99, 102, 241, 0.3);
+  --success: #22c55e;
+  --success-muted: rgba(34, 197, 94, 0.15);
+  --error: #ef4444;
+  --error-muted: rgba(239, 68, 68, 0.15);
+  --warning: #f59e0b;
+  --warning-muted: rgba(245, 158, 11, 0.15);
+  --info: #3b82f6;
+  --info-muted: rgba(59, 130, 246, 0.15);
+  --shadow: rgba(0, 0, 0, 0.5);
+  --glass-bg: rgba(24, 24, 27, 0.8);
+  --glass-border: rgba(255, 255, 255, 0.06);
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', monospace;
+  --radius: 8px;
+  --radius-sm: 4px;
+  --radius-lg: 12px;
+  --transition: 200ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+[data-theme="light"] {
+  --bg: #ffffff;
+  --bg-secondary: #f9fafb;
+  --surface: #f3f4f6;
+  --surface-hover: #e5e7eb;
+  --surface-active: #d1d5db;
+  --border: #e5e7eb;
+  --border-subtle: #f3f4f6;
+  --text: #111827;
+  --text-secondary: #4b5563;
+  --text-muted: #9ca3af;
+  --accent: #4f46e5;
+  --accent-hover: #6366f1;
+  --accent-muted: rgba(79, 70, 229, 0.1);
+  --accent-glow: rgba(79, 70, 229, 0.2);
+  --success: #16a34a;
+  --success-muted: rgba(22, 163, 74, 0.1);
+  --error: #dc2626;
+  --error-muted: rgba(220, 38, 38, 0.1);
+  --warning: #d97706;
+  --warning-muted: rgba(217, 119, 6, 0.1);
+  --info: #2563eb;
+  --info-muted: rgba(37, 99, 235, 0.1);
+  --shadow: rgba(0, 0, 0, 0.1);
+  --glass-bg: rgba(255, 255, 255, 0.8);
+  --glass-border: rgba(0, 0, 0, 0.06);
+}
+
+/* ===== Base Styles ===== */
+html {
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  overflow: hidden;
+  height: 100vh;
+  width: 100vw;
+}
+
+/* ===== Custom Scrollbar ===== */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
+}
+
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+
+/* ===== Selection ===== */
+::selection {
+  background: var(--accent-muted);
+  color: var(--accent-hover);
+}
+
+/* ===== Focus Ring ===== */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+/* ===== Animation Keyframes ===== */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes slideInFromRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideOutToRight {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
+@keyframes slideInFromBottom {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideInFromTop {
+  from {
+    transform: translateY(-10px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* ===== Utility Classes ===== */
+.animate-fade-in {
+  animation: fadeIn var(--transition) forwards;
+}
+
+.animate-fade-out {
+  animation: fadeOut var(--transition) forwards;
+}
+
+.animate-slide-in-right {
+  animation: slideInFromRight 300ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.animate-slide-out-right {
+  animation: slideOutToRight 300ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.animate-slide-in-bottom {
+  animation: slideInFromBottom var(--transition) forwards;
+}
+
+.animate-slide-in-top {
+  animation: slideInFromTop var(--transition) forwards;
+}
+
+.animate-scale-in {
+  animation: scaleIn var(--transition) forwards;
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+.animate-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* ===== Glassmorphism ===== */
+.glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+}
+
+.glass-heavy {
+  background: var(--glass-bg);
+  backdrop-filter: blur(32px) saturate(180%);
+  -webkit-backdrop-filter: blur(32px) saturate(180%);
+  border: 1px solid var(--glass-border);
+}
+
+/* ===== Skeleton Loading ===== */
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--surface) 25%,
+    var(--surface-hover) 37%,
+    var(--surface) 63%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s ease-in-out infinite;
+  border-radius: var(--radius-sm);
+}
+
+/* ===== Gradient Text ===== */
+.gradient-text {
+  background: linear-gradient(135deg, var(--accent) 0%, var(--accent-hover) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ===== Drag Handle ===== */
+.drag-handle {
+  cursor: col-resize;
+  user-select: none;
+  touch-action: none;
+}
+
+.drag-handle-vertical {
+  cursor: row-resize;
+  user-select: none;
+  touch-action: none;
+}
+
+.drag-handle:hover,
+.drag-handle:active {
+  background-color: var(--accent);
+}
+
+.drag-handle-vertical:hover,
+.drag-handle-vertical:active {
+  background-color: var(--accent);
+}
+
+/* ===== Monaco Editor Overrides ===== */
+.monaco-editor .margin {
+  background-color: var(--surface) !important;
+}
+
+/* ===== Context Menu ===== */
+.context-menu {
+  position: fixed;
+  z-index: 1000;
+  min-width: 180px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: 0 8px 30px var(--shadow), 0 2px 8px var(--shadow);
+  padding: 4px;
+  animation: scaleIn 150ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+/* ===== Tree Lines ===== */
+.tree-line {
+  position: relative;
+}
+
+.tree-line::before {
+  content: '';
+  position: absolute;
+  left: 10px;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: var(--border);
+}
+
+/* ===== Glow Effects ===== */
+.glow-accent {
+  box-shadow: 0 0 20px var(--accent-glow);
+}
+
+.glow-success {
+  box-shadow: 0 0 12px var(--success-muted);
+}
+
+.glow-error {
+  box-shadow: 0 0 12px var(--error-muted);
+}
