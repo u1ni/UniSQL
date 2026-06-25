@@ -95,7 +95,7 @@ UniSQL is divided into two parts: a **backend** (Node.js/Express) that connects 
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 - **Frontend:** Next.js, React, Tailwind CSS, Zustand, Monaco Editor.
 - **Backend:** Node.js, Express, `mssql` (TDS connection).
