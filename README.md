@@ -2,7 +2,7 @@
 
 UniSQL is a modern, web-based, AI-powered SQL Server management tool. Built to provide a premium developer experience, it offers features found in heavy desktop applications (like DBeaver or SSMS) straight from your browser.
 
-## ✨ Features
+## Features
 
 - **Web-Based Editor:** A fully functional Monaco-based SQL editor with syntax highlighting and auto-completion.
 - **AI Integration (Claude / Gemma):** 
@@ -14,7 +14,7 @@ UniSQL is a modern, web-based, AI-powered SQL Server management tool. Built to p
 - **Command Palette:** Quick access to all actions via `F1` or `Ctrl+P`.
 - **Sleek & Dynamic UI:** Modern dark/light mode interface with glassmorphism and micro-animations for an elevated aesthetic.
 
-## 🚀 Quick Start
+## Quick Start
 
 UniSQL is divided into two parts: a **backend** (Node.js/Express) that connects securely to your SQL Server, and a **frontend** (Next.js/React) that serves the user interface.
 
@@ -100,7 +100,7 @@ UniSQL is divided into two parts: a **backend** (Node.js/Express) that connects 
 - **Frontend:** Next.js, React, Tailwind CSS, Zustand, Monaco Editor.
 - **Backend:** Node.js, Express, `mssql` (TDS connection).
 
-## 🔒 Security Note
+## Security Note
 
 UniSQL connects directly to your database. It is highly recommended to run this tool locally or on a secured internal network. Do not expose the backend publicly without adding robust authentication mechanisms.
 
