@@ -14,6 +14,7 @@ import {
   AIConfig,
 } from '@/lib/api';
 import * as api from '@/lib/api';
+import { format } from 'sql-formatter';
 
 // ===== Types =====
 
@@ -63,6 +64,7 @@ export interface AppState {
   theme: Theme;
   showAIPanel: boolean;
   showHistoryPanel: boolean;
+  showCommandPalette: boolean;
   isSidebarCollapsed: boolean;
 
   // History state
@@ -115,6 +117,7 @@ export interface AppState {
   setTheme: (theme: Theme) => void;
   toggleAIPanel: () => void;
   toggleHistoryPanel: () => void;
+  toggleCommandPalette: () => void;
   toggleSidebar: () => void;
 
   // Actions - History
@@ -223,6 +226,7 @@ export const useAppStore = create<AppState>((set, get) => ({
   theme: 'dark',
   showAIPanel: false,
   showHistoryPanel: false,
+  showCommandPalette: false,
   isSidebarCollapsed: false,
 
   history: [],
@@ -307,6 +311,7 @@ export const useAppStore = create<AppState>((set, get) => ({
       selectedDatabase: null,
       explorerData: [],
       showConnectionDialog: true,
+      showCommandPalette: false,
     });
   },
 
@@ -766,6 +771,17 @@ export const useAppStore = create<AppState>((set, get) => ({
         await get().fetchProceduresForDatabase(database);
       }
 
+      // Record successful history
+      api.recordHistory({
+        sql: sqlToExecute,
+        database,
+        server: state.serverInfo?.name || state.activeConnectionId,
+        executionTime: result.executionTime,
+        rowCount: result.rowCount,
+      })
+      .then(() => get().loadHistory())
+      .catch(err => console.error('Failed to record history:', err));
+
     } catch (error: any) {
       // If the user cancelled the query, don't show an error (cancelQuery handles the UI)
       if (error?.name === 'AbortError') return;
@@ -804,6 +820,16 @@ export const useAppStore = create<AppState>((set, get) => ({
             : t
         ),
       }));
+
+      // Record failed history
+      api.recordHistory({
+        sql: sqlToExecute,
+        database,
+        server: state.serverInfo?.name || state.activeConnectionId,
+        error: isConnectionLost ? 'Connection expired' : (error instanceof Error ? error.message : 'Query execution failed')
+      })
+      .then(() => get().loadHistory())
+      .catch(err => console.error('Failed to record history:', err));
     }
   },
 
@@ -858,20 +884,10 @@ export const useAppStore = create<AppState>((set, get) => ({
     }
   },
 
-  toggleAIPanel: () =>
-    set((state) => ({
-      showAIPanel: !state.showAIPanel,
-      showHistoryPanel: state.showAIPanel ? state.showHistoryPanel : false,
-    })),
-
-  toggleHistoryPanel: () =>
-    set((state) => ({
-      showHistoryPanel: !state.showHistoryPanel,
-      showAIPanel: state.showHistoryPanel ? state.showAIPanel : false,
-    })),
-
-  toggleSidebar: () =>
-    set((state) => ({ isSidebarCollapsed: !state.isSidebarCollapsed })),
+  toggleAIPanel: () => set((state) => ({ showAIPanel: !state.showAIPanel })),
+  toggleHistoryPanel: () => set((state) => ({ showHistoryPanel: !state.showHistoryPanel })),
+  toggleCommandPalette: () => set((state) => ({ showCommandPalette: !state.showCommandPalette })),
+  toggleSidebar: () => set((state) => ({ isSidebarCollapsed: !state.isSidebarCollapsed })),
 
   // ===== History Actions =====
 
@@ -879,26 +895,21 @@ export const useAppStore = create<AppState>((set, get) => ({
     try {
       const result = await api.getHistory();
       set({ history: result.history || [] });
-    } catch {
-      // Use local fallback
-      try {
-        const stored = localStorage.getItem('unisql-history');
-        if (stored) set({ history: JSON.parse(stored) });
-      } catch {}
+    } catch (err) {
+      console.error('Failed to load history:', err);
     }
   },
 
   clearHistory: async () => {
     try {
       await api.clearHistory();
-    } catch {}
-    set({ history: [] });
-    try {
-      localStorage.removeItem('unisql-history');
-    } catch {}
+      set({ history: [] });
+    } catch (err) {
+      console.error('Failed to clear history:', err);
+    }
   },
 
-  // ===== AI Actions =====
+
 
   sendAIMessage: async (content) => {
     const userMessage: AIMessage = {

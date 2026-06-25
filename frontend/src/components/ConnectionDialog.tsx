@@ -304,8 +304,8 @@ export function ConnectionDialog({ isOpen }: ConnectionDialogProps) {
               <Button variant="secondary" onClick={handleTest} loading={isTesting} disabled={isConnecting}>
                 Test Connection
               </Button>
-              <Button variant="primary" onClick={handleConnect} loading={isConnecting} disabled={isTesting}>
-                <Play className="w-4 h-4 mr-2" /> Connect
+              <Button variant="primary" onClick={handleConnect} loading={isConnecting} disabled={isTesting} icon={<Play className="w-4 h-4" />}>
+                Connect
               </Button>
             </div>
           </div>

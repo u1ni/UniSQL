@@ -281,6 +281,13 @@ export async function getHistory(): Promise<{ history: HistoryEntry[] }> {
   return request('/history');
 }
 
+export async function recordHistory(entry: Partial<HistoryEntry>): Promise<void> {
+  return request('/history', {
+    method: 'POST',
+    body: JSON.stringify(entry),
+  });
+}
+
 export async function clearHistory(): Promise<void> {
   return request('/history', { method: 'DELETE' });
 }

@@ -1,9 +1,11 @@
 "use client";
 
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import Editor, { useMonaco } from "@monaco-editor/react";
 import { useAppStore } from "../stores/appStore";
-import { FileCode, X, Plus, Play } from "lucide-react";
+import { FileCode, X, Plus, Play, BookOpen, Wand2 } from "lucide-react";
+import { format } from "sql-formatter";
+import { ContextMenu } from "./ui/ContextMenu";
 
 export function EditorPanel() {
   const { 
@@ -20,6 +22,7 @@ export function EditorPanel() {
 
   const monaco = useMonaco();
   const editorRef = useRef<any>(null);
+  const [contextMenu, setContextMenu] = useState<{ x: number, y: number } | null>(null);
 
   const activeTab = tabs.find(t => t.id === activeTabId);
 
@@ -207,6 +210,89 @@ export function EditorPanel() {
       const state = useAppStore.getState();
       if (state.activeTabId) {
         state.saveTab(state.activeTabId);
+      }
+    });
+
+    // Native Context Menu Actions
+    editor.addAction({
+      id: 'unisql-run',
+      label: 'Run Query (F5)',
+      contextMenuGroupId: 'navigation',
+      contextMenuOrder: 1,
+      run: (ed: any) => {
+        const state = useAppStore.getState();
+        if (!state.activeTabId || !state.activeConnectionId) return;
+        
+        let selectedText = undefined;
+        const sel = ed.getSelection();
+        if (sel && !sel.isEmpty()) {
+          selectedText = ed.getModel().getValueInRange(sel);
+        }
+        state.executeQuery(state.activeTabId, selectedText);
+      }
+    });
+
+    editor.addAction({
+      id: 'unisql-format',
+      label: 'Format SQL',
+      contextMenuGroupId: 'navigation',
+      contextMenuOrder: 2,
+      run: (ed: any) => {
+        try {
+          const sel = ed.getSelection();
+          if (sel && !sel.isEmpty()) {
+            // Format selection
+            const text = ed.getModel().getValueInRange(sel);
+            const formatted = format(text, { language: 'tsql', tabWidth: 4, keywordCase: 'upper', linesBetweenQueries: 2 });
+            ed.executeEdits("format", [{ range: sel, text: formatted }]);
+          } else {
+            // Format all
+            const text = ed.getValue();
+            const formatted = format(text, { language: 'tsql', tabWidth: 4, keywordCase: 'upper', linesBetweenQueries: 2 });
+            ed.executeEdits("format", [{ range: ed.getModel().getFullModelRange(), text: formatted }]);
+          }
+          // Update store
+          const state = useAppStore.getState();
+          if (state.activeTabId) {
+            state.updateTabSQL(state.activeTabId, ed.getValue());
+          }
+        } catch (err) {
+          console.error("Failed to format SQL:", err);
+        }
+      }
+    });
+
+    editor.addAction({
+      id: 'unisql-explain',
+      label: 'AI Explain Query',
+      contextMenuGroupId: 'navigation',
+      contextMenuOrder: 3,
+      run: (ed: any) => {
+        const state = useAppStore.getState();
+        const tab = state.tabs.find(t => t.id === state.activeTabId);
+        let text = tab?.sql || "";
+        const sel = ed.getSelection();
+        if (sel && !sel.isEmpty()) {
+          text = ed.getModel().getValueInRange(sel);
+        }
+        state.explainQuery(text);
+      }
+    });
+
+    editor.addAction({
+      id: 'unisql-optimize',
+      label: 'AI Optimize Query',
+      contextMenuGroupId: 'navigation',
+      contextMenuOrder: 4,
+      run: (ed: any) => {
+        const state = useAppStore.getState();
+        const tab = state.tabs.find(t => t.id === state.activeTabId);
+        let text = tab?.sql || "";
+        const sel = ed.getSelection();
+        if (sel && !sel.isEmpty()) {
+          text = ed.getModel().getValueInRange(sel);
+        }
+        state.optimizeQuery(text);
       }
     });
   };

@@ -1,258 +1,109 @@
-<p align="center">
-  <h1 align="center">⚡ UniSQL</h1>
-  <p align="center">
-    <strong>A modern, web-based alternative to SQL Server Management Studio</strong>
-  </p>
-  <p align="center">
-    Cross-platform • Self-hosted • AI-powered • Beautiful UI
-  </p>
-</p>
+# UniSQL
+
+UniSQL is a modern, web-based, AI-powered SQL Server management tool. Built to provide a premium developer experience, it offers features found in heavy desktop applications (like DBeaver or SSMS) straight from your browser.
+
+## ✨ Features
+
+- **Web-Based Editor:** A fully functional Monaco-based SQL editor with syntax highlighting and auto-completion.
+- **AI Integration (Claude / Gemma):** 
+  - Automatically explain complex SQL queries.
+  - Optimize queries for better performance.
+  - Chat with AI specifically about your database.
+- **Native File System Access:** Open and save `.sql` files directly to your local computer (supports `Ctrl+S` overwriting on modern browsers).
+- **Advanced Query History:** Keep track of your past queries, their execution times, and affected rows natively.
+- **Command Palette:** Quick access to all actions via `F1` or `Ctrl+P`.
+- **Sleek & Dynamic UI:** Modern dark/light mode interface with glassmorphism and micro-animations for an elevated aesthetic.
+
+## 🚀 Quick Start
+
+UniSQL is divided into two parts: a **backend** (Node.js/Express) that connects securely to your SQL Server, and a **frontend** (Next.js/React) that serves the user interface.
+
+### Prerequisites
+
+- [Node.js](https://nodejs.org/) (v18 or higher)
+- [npm](https://www.npmjs.com/) (usually comes with Node.js)
+- A running instance of Microsoft SQL Server
 
 ---
 
-## 🚀 What is UniSQL?
+### Installation Guide
 
-UniSQL is a **self-hosted web application** that provides a modern SQL Server management experience directly in your browser. It replaces the need for heavy desktop applications like SSMS, offering a clean and powerful interface inspired by **v0.app**, **VS Code**, and **Notion**.
+#### Windows
 
-### ✨ Key Features
+1. **Clone the repository:**
+   ```cmd
+   git clone https://github.com/u1ni/UniSQL.git
+   cd UniSQL
+   ```
+2. **Install & Run Backend:**
+   ```cmd
+   cd backend
+   npm install
+   npm run dev
+   ```
+   *(The backend will start on `http://localhost:3001`)*
+3. **Install & Run Frontend:**
+   Open a **new terminal** window, and run:
+   ```cmd
+   cd UniSQL/frontend
+   npm install
+   npm run dev
+   ```
+   *(The frontend will start on `http://localhost:3000`)*
 
-| Feature | Description |
-|---|---|
-| 🖥️ **SQL Editor** | Monaco Editor (same as VS Code) with syntax highlighting, autocompletion |
-| 🌳 **Object Explorer** | Browse databases, tables, views, procedures in a tree view |
-| 📊 **Results Grid** | Interactive results table with sorting, export to CSV/JSON |
-| 🎨 **Themes** | Dark, Light, and Custom themes with live switching |
-| 🤖 **AI Assistant** | Explain queries, optimize SQL, chat about your database |
-| 📜 **History** | Auto-saved query history with search and re-execution |
-| 🔒 **Security** | Dangerous query detection, credential protection |
-| 🐳 **Docker Ready** | One command to deploy with Docker Compose |
-| 💻 **Cross-platform** | Works on Windows, macOS, and Linux |
+#### macOS
 
----
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/u1ni/UniSQL.git
+   cd UniSQL
+   ```
+2. **Install & Run Backend:**
+   ```bash
+   cd backend
+   npm install
+   npm run dev
+   ```
+3. **Install & Run Frontend:**
+   Open a **new terminal** window, and run:
+   ```bash
+   cd UniSQL/frontend
+   npm install
+   npm run dev
+   ```
 
-## 📋 Prerequisites
+#### Linux
 
-- **Node.js** v18+ ([Download](https://nodejs.org))
-- **Microsoft SQL Server** (local or remote) — the database you want to manage
-- *(Optional)* **Docker** — for containerized deployment
-- *(Optional)* **Ollama** or **OpenAI API key** — for AI features
-
----
-
-## 🛠️ Quick Start (Development)
-
-### 1. Clone and install
-
-```bash
-# Navigate to the project
-cd unisql
-
-# Install backend dependencies
-cd backend
-npm install
-
-# Install frontend dependencies
-cd ../frontend
-npm install
-```
-
-### 2. Start the backend
-
-```bash
-cd backend
-npm run dev
-# Server starts on http://localhost:3001
-```
-
-### 3. Start the frontend (in a new terminal)
-
-```bash
-cd frontend
-npm run dev
-# App opens at http://localhost:3000
-```
-
-### 4. Connect to SQL Server
-
-1. Open http://localhost:3000 in your browser
-2. Click **"New Connection"**
-3. Enter your SQL Server details:
-   - **Server**: `localhost` or your server IP
-   - **Port**: `1433` (default)
-   - **Username**: your SQL Server username
-   - **Password**: your password
-4. Click **"Test Connection"** to verify
-5. Click **"Connect"** to start working!
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/u1ni/UniSQL.git
+   cd UniSQL
+   ```
+2. **Install & Run Backend:**
+   ```bash
+   cd backend
+   npm install
+   npm run dev
+   ```
+3. **Install & Run Frontend:**
+   Open a **new terminal** window, and run:
+   ```bash
+   cd UniSQL/frontend
+   npm install
+   npm run dev
+   ```
 
 ---
 
-## 🐳 Docker Deployment
+## 🛠️ Tech Stack
 
-### Quick Start with Docker Compose
+- **Frontend:** Next.js, React, Tailwind CSS, Zustand, Monaco Editor.
+- **Backend:** Node.js, Express, `mssql` (TDS connection).
 
-```bash
-cd unisql
-docker compose up -d
-```
+## 🔒 Security Note
 
-This will start:
-- **Frontend** on http://localhost:3000
-- **Backend** on http://localhost:3001
-
-### With a test SQL Server
-
-Uncomment the `sqlserver` service in `docker-compose.yml`, then:
-
-```bash
-docker compose up -d
-```
-
-Connect using:
-- **Server**: `sqlserver` (from within Docker) or `localhost` (from host)
-- **Username**: `sa`
-- **Password**: `YourStrong!Passw0rd`
-
----
-
-## 🤖 AI Configuration
-
-UniSQL supports AI-powered query analysis using **OpenAI** or **Ollama** (local).
-
-### Option A: Ollama (Free, Local)
-
-1. Install [Ollama](https://ollama.ai)
-2. Pull a model: `ollama pull llama3`
-3. In UniSQL, open the AI panel and configure:
-   - **Provider**: Ollama
-   - **Model**: llama3
-   - **URL**: http://localhost:11434
-
-### Option B: OpenAI
-
-1. Get an API key from [OpenAI](https://platform.openai.com)
-2. In UniSQL, open the AI panel and configure:
-   - **Provider**: OpenAI
-   - **API Key**: your-api-key
-   - **Model**: gpt-4o
-
-### AI Features
-
-- **Explain Query**: Breaks down what a SQL query does in plain language
-- **Optimize Query**: Suggests performance improvements
-- **Chat**: Ask questions about your database structure
-
----
-
-## ⌨️ Keyboard Shortcuts
-
-| Shortcut | Action |
-|---|---|
-| `F5` | Execute query |
-| `Ctrl + Enter` | Execute query |
-| `Ctrl + Shift + E` | Execute selected text |
-| `Ctrl + N` | New query tab |
-| `Ctrl + W` | Close current tab |
-| `Ctrl + S` | Save query |
-| `Ctrl + Shift + F` | Format SQL |
-| `Ctrl + P` | Search tables/objects |
-| `Ctrl + H` | Toggle history |
-| `Ctrl + J` | Toggle AI panel |
-
----
-
-## 🏗️ Architecture
-
-```
-┌─────────────────────────────────────────────┐
-│           Browser (localhost:3000)           │
-│  ┌─────────┬──────────────┬──────────────┐  │
-│  │Sidebar  │ Monaco Editor│  AI Chat     │  │
-│  │(Explorer)│  (SQL)      │  (Optional)  │  │
-│  │         ├──────────────┤              │  │
-│  │         │ Results Grid │              │  │
-│  └─────────┴──────────────┴──────────────┘  │
-└──────────────────┬──────────────────────────┘
-                   │ HTTP/REST
-┌──────────────────┴──────────────────────────┐
-│        Node.js Backend (port 3001)          │
-│  Express + mssql + AI Service + MCP         │
-└──────────────────┬──────────────────────────┘
-                   │ TDS Protocol
-┌──────────────────┴──────────────────────────┐
-│          Microsoft SQL Server               │
-└─────────────────────────────────────────────┘
-```
-
----
-
-## 📁 Project Structure
-
-```
-unisql/
-├── backend/                  # Express API server
-│   ├── server.js             # Entry point
-│   ├── src/
-│   │   ├── routes/           # API endpoints
-│   │   │   ├── connections.js
-│   │   │   ├── database.js
-│   │   │   ├── query.js
-│   │   │   ├── history.js
-│   │   │   └── ai.js
-│   │   ├── services/         # Business logic
-│   │   │   ├── connectionManager.js
-│   │   │   └── aiService.js
-│   │   ├── mcp/              # MCP server
-│   │   │   └── mcpServer.js
-│   │   └── utils/            # Helpers
-│   │       ├── storage.js
-│   │       └── security.js
-│   └── data/                 # JSON storage
-├── frontend/                 # Next.js app
-│   └── src/
-│       ├── app/              # Pages & layout
-│       ├── components/       # React components
-│       ├── stores/           # Zustand state
-│       ├── hooks/            # Custom hooks
-│       └── lib/              # API client
-├── docker-compose.yml
-└── README.md
-```
-
----
-
-## 🔧 Configuration
-
-### Environment Variables
-
-**Backend** (`backend/.env`):
-```env
-PORT=3001
-NODE_ENV=development
-```
-
-**Frontend** (`frontend/.env.local`):
-```env
-NEXT_PUBLIC_API_URL=http://localhost:3001
-```
-
----
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
----
+UniSQL connects directly to your database. It is highly recommended to run this tool locally or on a secured internal network. Do not expose the backend publicly without adding robust authentication mechanisms.
 
 ## 📄 License
 
-This project is licensed under the MIT License.
-
----
-
-<p align="center">
-  Built with ❤️ for developers and DBAs who deserve better tools.
-</p>
+This project is open-source and available under the MIT License.

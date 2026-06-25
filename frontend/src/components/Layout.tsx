@@ -9,6 +9,7 @@ import { ResultsPanel } from "./ResultsPanel";
 import { HistoryPanel } from "./HistoryPanel";
 import { AIChatPanel } from "./AIChatPanel";
 import { ConnectionDialog } from "./ConnectionDialog";
+import { CommandPalette } from "./CommandPalette";
 import { useAppStore } from "../stores/appStore";
 
 export function Layout() {
@@ -113,6 +114,7 @@ export function Layout() {
       
       <StatusBar />
       
+      <CommandPalette />
       <ConnectionDialog isOpen={showConnectionDialog} />
     </div>
   );
