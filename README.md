@@ -104,6 +104,6 @@ UniSQL is divided into two parts: a **backend** (Node.js/Express) that connects 
 
 UniSQL connects directly to your database. It is highly recommended to run this tool locally or on a secured internal network. Do not expose the backend publicly without adding robust authentication mechanisms.
 
-## 📄 License
+## License
 
 This project is open-source and available under the MIT License.
