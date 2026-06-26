@@ -107,6 +107,11 @@ UniSQL connects directly to your database. It is highly recommended to run this 
 ## License
 
 This project is open-source and available under the MIT License.
+
 ## Preview
 
-https://files.catbox.moe/e28goa.png
+![1](https://files.catbox.moe/e28goa.png)
+![2](https://files.catbox.moe/1vbo3y.png)
+![3](https://files.catbox.moe/tay25z.png)
+![4](https://files.catbox.moe/nlctbl.png)
+
