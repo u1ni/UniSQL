@@ -22,7 +22,12 @@ UniSQL is divided into two parts: a **backend** (Node.js/Express) that connects 
 
 - [Node.js](https://nodejs.org/) (v18 or higher)
 - [npm](https://www.npmjs.com/) (usually comes with Node.js)
-- A running instance of Microsoft SQL Server
+- **A running instance of Microsoft SQL Server**. If you don't have it installed:
+  - 🪟 **Windows**: Download and install [SQL Server Developer Edition](https://www.microsoft.com/en-us/sql-server/sql-server-downloads). Make sure to enable "SQL Server Authentication" and set a password for the `sa` user during setup.
+  - 🍏 **macOS / 🐧 Linux**: The easiest way is to run it via [Docker](https://www.docker.com/). Run this command in your terminal (replace `YourStrong!Passw0rd` with your own password):
+    ```bash
+    docker run -e "ACCEPT_EULA=Y" -e "MSSQL_SA_PASSWORD=YourStrong!Passw0rd" -p 1433:1433 -d mcr.microsoft.com/mssql/server:2022-latest
+    ```
 
 ---
 
