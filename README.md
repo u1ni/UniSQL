@@ -2,7 +2,7 @@
 
 UniSQL is a modern, web-based, AI-powered SQL Server management tool. Built to provide a premium developer experience, it offers features found in heavy desktop applications (like DBeaver or SSMS) straight from your browser.
 
-> **💡 The Origin Story:** This project was born during my Database Systems class. Several classmates were struggling to install and configure traditional tools like DBeaver on Linux and macOS. UniSQL was created as an accessible, zero-hassle alternative to solve that problem, while also providing a modern, limitation-free experience for Windows users.
+> ** The Origin Story:** This project was born during my Database Systems class. Several classmates were struggling to install and configure traditional tools like DBeaver on Linux and macOS. UniSQL was created as an accessible, zero-hassle alternative to solve that problem, while also providing a modern, limitation-free experience for Windows users.
 
 ## Features
 
