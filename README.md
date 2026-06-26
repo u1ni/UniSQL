@@ -110,12 +110,21 @@ This project is open-source and available under the MIT License.
 
 ## Preview
 
-<div align="center">
-  <img src="https://files.catbox.moe/e28goa.png" width="800" />
-  <br><br>
-  <img src="https://files.catbox.moe/1vbo3y.png" width="800" />
-  <br><br>
-  <img src="https://files.catbox.moe/tay25z.png" width="800" />
-  <br><br>
-  <img src="https://files.catbox.moe/nlctbl.png" width="800" />
-</div>
+<table>
+  <tr>
+    <td width="50%" valign="top">
+      <img src="https://files.catbox.moe/e28goa.png" width="100%" alt="Preview 1" />
+    </td>
+    <td width="50%" valign="top">
+      <img src="https://files.catbox.moe/1vbo3y.png" width="100%" alt="Preview 2" />
+    </td>
+  </tr>
+  <tr>
+    <td width="50%" valign="top">
+      <img src="https://files.catbox.moe/tay25z.png" width="100%" alt="Preview 3" />
+    </td>
+    <td width="50%" valign="top">
+      <img src="https://files.catbox.moe/nlctbl.png" width="100%" alt="Preview 4" />
+    </td>
+  </tr>
+</table>
