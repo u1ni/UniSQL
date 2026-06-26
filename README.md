@@ -110,8 +110,11 @@ This project is open-source and available under the MIT License.
 
 ## Preview
 
-![1](https://files.catbox.moe/e28goa.png)
-![2](https://files.catbox.moe/1vbo3y.png)
-![3](https://files.catbox.moe/tay25z.png)
-![4](https://files.catbox.moe/nlctbl.png)
-
+<p align="center">
+  <img src="https://files.catbox.moe/e28goa.png" width="49%" />
+  <img src="https://files.catbox.moe/1vbo3y.png" width="49%" />
+</p>
+<p align="center">
+  <img src="https://files.catbox.moe/tay25z.png" width="49%" />
+  <img src="https://files.catbox.moe/nlctbl.png" width="49%" />
+</p>
